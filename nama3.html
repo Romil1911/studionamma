@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            font-family: sans-serif;
+        }
+        .hero{
+            margin-top: 200px;
+            margin-bottom: 200px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+             overflow: hidden;
+        }
+        .word{
+            font-size: 150px;
+            font-weight: 800;
+            line-height: 1.05;
+            opacity: 0;
+            transform: translateY(120%);
+            transition: 0.5s ease;
+        }
+        .word.show{
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .circle{
+            width: 10px;
+            height: 10px;
+            background: darkblue;
+            border-radius: 50%;
+            position: fixed;
+            left: 0;
+            top: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 25px;
+            z-index: 9999;
+
+            will-change: transform;
+            transition: width .3s ease, height .3s ease, rotate .3s ease;
+        }
+        .mainbox{
+            height: 1500px;
+            width: 100%;
+            margin-top: 120px;   
+            display: flex; 
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+        }
+        .box1, .box2, .box3, .box4{
+            height: 720px;
+            width: 49%;
+            display: inline-block;
+            margin-left: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+        .video1, .video2, .video3, .video4{
+            position: absolute;
+            top: 20px;
+            left: 170px;
+            width: 50%;
+            height: 100%;
+            display: none;
+
+            z-index: 1;
+        }
+        img{
+            height: 100%;
+            width: 100%;
+            border-radius: 5px;
+        }
+        .main-video{
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="word">P</div>
+        <div class="word">L</div>
+        <div class="word">A</div>
+        <div class="word">Y</div>
+        <div class="word">G</div>
+        <div class="word">R</div>
+        <div class="word">O</div>
+        <div class="word">U</div>
+        <div class="word">N</div>
+        <div class="word">D</div>
+    </div>
+        
+    <div class="circle"></div>
+    <div class="mainbox">
+        <div class="box1">
+            <img src="https://cdn.prod.website-files.com/67aca0c732855fc2a1f2c4fc/68bb0be00336912e360b324f_main%20case%20cover%20matera%20(1)-p-2000.webp" alt="">
+            <div class="video1">
+                <video class="main-video" autoplay loop muted playsinline>
+                    <source src="https://studionamma.vercel.app/videos/matera/matera-highlight-2.mp4">
+                </video>
+            </div>
+        </div>
+        <div class="box2">
+            <img src="https://cdn.prod.website-files.com/67aca0c732855fc2a1f2c4fc/68bae5b9f22246585fe911d0_chance-cover-desktop-p-2000.webp" alt="">
+            <div class="video2">
+                <video class="main-video" autoplay loop muted playsinline>
+                    <source src="https://studionamma.vercel.app/videos/chance/chance-cover.mp4">
+                </video>
+            </div>
+        </div>
+        <div class="box3">
+            <img src="https://cdn.prod.website-files.com/67aca0c732855fc2a1f2c4fc/68beb68ead192a24f9ad4372_silvr%20case%20cover%20(1)-p-2000.webp" alt="">
+            <div class="video3">
+                <video class="main-video" autoplay loop muted playsinline>
+                    <source src="https://studionamma.vercel.app/videos/silvr/silvr-highlight.mp4">
+                </video>
+            </div>
+        </div>
+        <div class="box4">
+            <img src="https://cdn.prod.website-files.com/67aca0c732855fc2a1f2c4fc/68bb1c497ad001257f2e727f_intramuros-cover-case-home%20(1)-p-2000.webp" alt="">
+            <div class="video4">
+                <video class="main-video" autoplay loop muted playsinline>
+                    <source src="https://studionamma.vercel.app/videos/intramuros/intramuros-highlight.mp4">
+                </video>
+            </div>
+        </div>
+    </div>
+        <script>
+            
+            let hero = document.querySelector('.hero');
+            const words = document.querySelectorAll('.word');
+            words.forEach((word, index) => {
+                setTimeout(() => {
+                    word.classList.add('show');
+                }, index * 60);
+            });
+
+            let circle=document.querySelector('.circle')
+            let mouseX = 0;
+            let mouseY = 0;
+
+            let currentX = 0;
+            let currentY = 0;
+
+            document.addEventListener("mousemove", (e) => {
+                mouseX = e.clientX + 20;
+                mouseY = e.clientY + 20;
+            });
+
+            function animateCursor() {
+                currentX += (mouseX - currentX) * 0.22;
+                currentY += (mouseY - currentY) * 0.22;
+
+                circle.style.left = currentX + "px";
+                circle.style.top = currentY + "px";
+
+                requestAnimationFrame(animateCursor);
+            }
+
+            animateCursor();
+
+
+            let fontenter=document.querySelector('.hero')
+            fontenter.addEventListener('mouseenter',()=>{
+                circle.style.height="50px"
+                circle.style.width="150px"
+                circle.style.borderRadius="5px"
+                circle.style.transform = 'translate(-50%, -50%) rotate(-9deg)';
+                circle.style.transition = 'width 0.3s ease, height 0.3s ease, font-size 0.3s ease';
+                circle.textContent = "PORTFOLIO";
+            })
+
+            fontenter.addEventListener('mouseleave', () => {
+                circle.style.width = '10px';
+                circle.style.height = '10px';
+                circle.style.transform = 'translate(-50%, -50%) rotate(0deg)';
+                circle.textContent = "";
+            })
+
+            let box1=document.querySelector('.box1')
+            let box2=document.querySelector('.box2')
+            let box3=document.querySelector('.box3')
+            let box4=document.querySelector('.box4')
+            
+            let video1=document.querySelector('.video1')
+            let video2=document.querySelector('.video2')
+            let video3=document.querySelector('.video3')
+            let video4=document.querySelector('.video4')
+
+            let img1=document.querySelector('.box1 img')
+            let img2=document.querySelector('.box2 img')
+            let img3=document.querySelector('.box3 img')
+            let img4=document.querySelector('.box4 img')
+
+            box1.addEventListener('mouseenter',()=>{
+                circle.style.height="50px"
+                circle.style.width="120px"
+                circle.style.borderRadius="5px"
+                circle.style.transform = 'translate(-50%, -50%) rotate(-8deg)';
+                circle.style.transition = 'width 0.3s ease, height 0.3s ease, font-size 0.3s ease';
+                circle.textContent = "MATERA";
+                
+                box1.style.height="710px"
+                box1.style.width="48%"
+                box1.style.transition = 'width 0.3s ease, height 0.3s ease';
+                
+                video1.style.display="block"
+
+                img1.style.filter="blur(5px)"
+            })
+            
+            box1.addEventListener('mouseleave', () => {
+                circle.style.width = '10px';
+                circle.style.height = '10px';
+                circle.style.transform = 'translate(-50%, -50%) rotate(0deg)';
+                circle.textContent = "";
+                
+                box1.style.height="720px"
+                box1.style.width="49%"
+                box1.style.transition = 'width 0.3s ease, height 0.3s ease';
+                
+                video1.style.display="none"
+                
+                img1.style.filter="blur()"
+            })
+            
+            box2.addEventListener('mouseenter',()=>{
+                circle.style.height="50px"
+                circle.style.width="120px"
+                circle.style.borderRadius="5px"
+                circle.style.transform = 'translate(-50%, -50%) rotate(-8deg)';
+                circle.style.transition = 'width 0.3s ease, height 0.3s ease, font-size 0.3s ease';
+                circle.textContent = "CHANCE";
+
+                box2.style.height="710px"
+                box2.style.width="48%"
+                box2.style.transition = 'width 0.3s ease, height 0.3s ease';
+                
+                video2.style.display="block"
+
+                img2.style.filter="blur(5px)"
+            })
+
+            box2.addEventListener('mouseleave', () => {
+                circle.style.width = '10px';
+                circle.style.height = '10px';
+                circle.style.transform = 'translate(-50%, -50%) rotate(0deg)';
+                circle.textContent = "";
+
+                box2.style.height="720px"
+                box2.style.width="49%"
+                box2.style.transition = 'width 0.3s ease, height 0.3s ease';
+                
+                video2.style.display="none"
+                
+                img2.style.filter="blur()"
+            })
+            
+            box3.addEventListener('mouseenter',()=>{
+                circle.style.height="50px"
+                circle.style.width="110px"
+                circle.style.borderRadius="5px"
+                circle.style.transform = 'translate(-50%, -50%) rotate(-8deg)';
+                circle.style.transition = 'width 0.3s ease, height 0.3s ease, font-size 0.3s ease';
+                circle.textContent = "SILVER";
+
+                box3.style.height="710px"
+                box3.style.width="48%"
+                box3.style.transition = 'width 0.3s ease, height 0.3s ease';
+                
+                video3.style.display="block"
+
+                img3.style.filter="blur(5px)"
+            })
+
+            box3.addEventListener('mouseleave', () => {
+                circle.style.width = '10px';
+                circle.style.height = '10px';
+                circle.style.transform = 'translate(-50%, -50%) rotate(0deg)';
+                circle.textContent = "";
+
+                box3.style.height="720px"
+                box3.style.width="49%"
+                box3.style.transition = 'width 0.3s ease, height 0.3s ease';
+                
+                video3.style.display="none"
+                
+                img3.style.filter="blur()"
+            })
+            
+            box4.addEventListener('mouseenter',()=>{
+                circle.style.height="50px"
+                circle.style.width="180px"
+                circle.style.borderRadius="5px"
+                circle.style.transform = 'translate(-50%, -50%) rotate(-8deg)';
+                circle.style.transition = 'width 0.3s ease, height 0.3s ease, font-size 0.3s ease';
+                circle.textContent = "INTRAMUROS";
+
+                box4.style.height="710px"
+                box4.style.width="48%"
+                box4.style.transition = 'width 0.3s ease, height 0.3s ease';
+                
+                video4.style.display="block"
+
+                img4.style.filter="blur(5px)"
+            })
+
+            box4.addEventListener('mouseleave', () => {
+                circle.style.width = '10px';
+                circle.style.height = '10px';
+                circle.style.transform = 'translate(-50%, -50%) rotate(0deg)';
+                circle.textContent = "";
+
+                box4.style.height="720px"
+                box4.style.width="49%"
+                box4.style.transition = 'width 0.3s ease, height 0.3s ease';
+                
+                video4.style.display="none"
+                
+                img4.style.filter="blur()"
+            })
+
+        
+    </script>
+    </body>
+</html>

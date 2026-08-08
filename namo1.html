@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+        body{
+            width:100%;
+            height:100vh;
+            background:#fff;
+            overflow:hidden;
+            cursor:none;
+            perspective:1000px;
+        }
+        .logo{
+            position:fixed;
+            top:30px;
+            left:35px;
+            font-size:35px;
+            font-weight:bold;
+            color:#000;
+            z-index:1000;
+        }
+        .hero-text{
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+            text-align:center;
+            z-index:10;
+            pointer-events:none;
+        }
+        .line{
+            overflow:hidden;
+        }
+        .line span{
+            display:inline-block;
+            font-size:95px;
+            font-weight:bold;
+            color:#000;
+            line-height:1.05;
+            opacity:0;
+            transform:translateY(120%);
+            transition:1s ease;
+        }
+        .line span.show{
+            opacity:1;
+            transform:translateY(0);
+        }
+        .video-box{
+            width:260px;
+            height:380px;
+            position:fixed;
+            left:50%;
+            top:50%;
+            overflow:hidden;
+            border-radius:18px;
+            border: 2px solid black;
+            pointer-events:none;
+            z-index:50;
+            transform:translate(-50%,-50%) perspective(1000px) rotateX(0deg) rotateY(0deg);
+            transform-style:preserve-3d;
+            backface-visibility:hidden;
+            will-change:transform,left,top;
+            box-shadow:0 20px 45px rgba(0,0,0,.25);
+        }
+        .video-box video{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+        }
+        @media(max-width:768px){
+            .logo{
+                font-size:26px;
+                left:20px;
+            }
+            .line span{
+                font-size:55px;
+            }
+            .video-box{
+                width:180px;
+                height:120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        Studio NAMA
+    </div>
+    <div class="hero-text">
+        <div class="line">
+            <span>We think</span>
+        </div>
+        <div class="line">
+            <span>craft and</span>
+        </div>
+        <div class="line">
+            <span>design</span>
+        </div>
+    </div>
+    <div class="video-box">
+        <video autoplay muted loop playsinline>
+            <source src="video.mp4" type="video/mp4">
+        </video>
+
+    </div>
+
+    <script>
+
+        const lines = document.querySelectorAll(".line span");
+
+        lines.forEach((line,index)=>{
+            setTimeout(()=>{
+                line.classList.add("show");
+            },index*350);
+        });
+
+        const videoBox = document.querySelector(".video-box");
+
+        let mouseX = window.innerWidth/2;
+        let mouseY = window.innerHeight/2;
+
+        let currentX = mouseX;
+        let currentY = mouseY;
+
+        document.addEventListener("mousemove",(e)=>{
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function followCursor(){
+            currentX += (mouseX-currentX)*0.12;
+            currentY += (mouseY-currentY)*0.12;
+            videoBox.style.left = currentX + "px";
+            videoBox.style.top = currentY + "px";
+            requestAnimationFrame(followCursor);
+        }
+
+        followCursor();
+        let rotateX = 0;
+        let rotateY = 0;
+
+        function tiltVideo(){
+
+            let targetRotateY = (mouseX - currentX) * 0.35;
+            let targetRotateX = (currentY - mouseY) * 0.15;
+
+            if(targetRotateY > 20) targetRotateY = 20;
+            if(targetRotateY < -20) targetRotateY = -20;
+
+            if(targetRotateX > 10) targetRotateX = 10;
+            if(targetRotateX < -10) targetRotateX = -10;
+
+            rotateY += (targetRotateY - rotateY) * 0.15;
+            rotateX += (targetRotateX - rotateX) * 0.15;
+
+            videoBox.style.transform =
+            `translate(-50%,-50%)
+            perspective(1000px)
+            rotateX(${rotateX}deg)
+            rotateY(${rotateY}deg)`;
+            requestAnimationFrame(tiltVideo);
+        }
+        tiltVideo();
+    </script>
+
+</body>
+</html>
