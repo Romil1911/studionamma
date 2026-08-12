@@ -13,24 +13,24 @@
             overflow: hidden;
         }
 
-        .container{
-            position: relative;
+        .container {
+            position: fixed;
+            inset: 0;
             width: 100vw;
             height: 100vh;
             overflow: hidden;
         }
 
-        .container iframe{
+        .container iframe {
             position: absolute;
+            width: 100vw;
+            height: 100vh;
             top: 50%;
             left: 50%;
-            width: 100vw;
-            height: 56.25vw;      /* 16:9 */
-            min-width: 177.78vh;
-            min-height: 100vh;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) scale(1.01);
             border: 0;
             pointer-events: none;
+            aspect-ratio: 16 / 9;
         }
 
         .circle{
